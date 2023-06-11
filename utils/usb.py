@@ -5,13 +5,15 @@ import time
 class USB:
     def listen_for_devices(self):
         stop = False
+        devices = usb.core.find(find_all=True)
+
         while True:
             # Check if any USB device is connected
-            devices = usb.core.find(find_all=False)
-
+            devices = usb.core.find(find_all=True)
             if devices:
                 for device in devices:
                     if(self.check_device_capabilities(device)):
+                        print(device)
                         print("Device is rewritable and can read files")
                         stop = True
             if stop:
