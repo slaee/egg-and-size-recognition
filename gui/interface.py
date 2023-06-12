@@ -77,6 +77,7 @@ infousb.configure(font=("XL", 16))
 infousb.place(x=690, y=60)
 
 usb_manager = USBUtil()
+usb_manager.check_initial_status()
 
 def update_usb_status():
     if usb_manager.status:
@@ -92,16 +93,12 @@ def update_usb_status():
 def run_usb_listener():
     usb_manager.listen()
     root.after(0, update_usb_status)
-
-# Create and start the thread
 usb_listener_thread = threading.Thread(target=run_usb_listener)
 usb_listener_thread.start()
 
 def check_usb_status():
     update_usb_status()
-    # Check again after 1 second (adjust the interval as needed)
     root.after(1000, check_usb_status)
-
 check_usb_status()
 
 
