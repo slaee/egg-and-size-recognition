@@ -16,11 +16,26 @@ liveframe.pack(pady=10, padx=10, fill="both", expand=True)
 camera_feed = ctk.CTkLabel(liveframe, text="")
 camera_feed.pack(pady=10, padx=10)
 
-imageTextBox = ctk.CTkEntry(liveframe, placeholder_text="Image Name")
+imageTextBox = ctk.CTkEntry(liveframe, placeholder_text="Egg health")
 imageTextBox.configure(font=("XL", 16))
-imageTextBox.place(x=250, y=520, relwidth=0.3, relheight=0.08)
+imageTextBox.place(x=150, y=520, relwidth=0.3, relheight=0.08)
 
-captureImage = ctk.CTkButton(liveframe, text="Capture Image")
+imageSizeTextBox = ctk.CTkEntry(liveframe, placeholder_text="Size")
+imageSizeTextBox.configure(font=("XL", 16))
+imageSizeTextBox.place(x=420, y=520, relwidth=0.2, relheight=0.08)
+
+captureimage = None
+
+def capture_image():
+    image_name = imageTextBox.get()
+    image_size = imageSizeTextBox.get()
+    if image_name != "":
+        captureimage.save("./datasets/eggs/" + image_name + "-" + image_size + ".png")
+        print("Image saved")
+    else:
+        print("Image not saved")
+
+captureImage = ctk.CTkButton(liveframe, text="Save Egg", command=capture_image)
 captureImage.configure(font=("XL", 16))
 captureImage.place(x=250, y=600, relwidth=0.3, relheight=0.08)
 
@@ -35,6 +50,8 @@ if cap.isOpened():
         right = (width + 400)/2
         bottom = (height + 400)/2
         image = image.crop((left, top, right, bottom))
+
+        captureimage = image
 
         # if(np.mean(image) > 10):
         #     print("Egg detected")
