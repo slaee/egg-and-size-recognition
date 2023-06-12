@@ -6,3 +6,5 @@ matplotlib
 customtkinter
 pyusb
 pyudev
+scipy
+scikit-learn
