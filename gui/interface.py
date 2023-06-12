@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from utils import USB
+from utils import USBUtil
 import threading
 
 ctk.set_appearance_mode("dark")
@@ -76,14 +76,34 @@ infousb = ctk.CTkLabel(liveframe, text="(Please insert a Flash Drive to save you
 infousb.configure(font=("XL", 16))
 infousb.place(x=690, y=60)
 
-usb_manager = USB()
+usb_manager = USBUtil()
+
+def update_usb_status():
+    if usb_manager.status:
+        usbstatus.configure(text="Flash Drive connected")
+        usbstatus.configure(fg_color="limegreen")
+        infousb.configure(text="(Your data will be saved to the Flash Drive.)")
+    else:
+        usbstatus.configure(text="No Flash Drive connected")
+        usbstatus.configure(fg_color="red")
+        infousb.configure(text="(Please insert a Flash Drive to save your data.)")
+    root.after(1000, update_usb_status)
 
 def run_usb_listener():
-    usb_manager.listen_for_devices()
+    usb_manager.listen()
+    root.after(0, update_usb_status)
 
 # Create and start the thread
 usb_listener_thread = threading.Thread(target=run_usb_listener)
 usb_listener_thread.start()
+
+def check_usb_status():
+    update_usb_status()
+    # Check again after 1 second (adjust the interval as needed)
+    root.after(1000, check_usb_status)
+
+check_usb_status()
+
 
 startbtn = ctk.CTkButton(root, text="START")
 startbtn.configure(font=("XL", 24))
