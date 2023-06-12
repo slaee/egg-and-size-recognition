@@ -101,7 +101,6 @@ def check_usb_status():
     root.after(1000, check_usb_status)
 check_usb_status()
 
-
 startbtn = ctk.CTkButton(root, text="START")
 startbtn.configure(font=("XL", 24))
 startbtn.configure(fg_color="limegreen")
