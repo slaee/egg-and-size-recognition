@@ -94,6 +94,7 @@ def run_usb_listener():
     usb_manager.listen()
     root.after(0, update_usb_status)
 usb_listener_thread = threading.Thread(target=run_usb_listener)
+usb_listener_thread.daemon = True
 usb_listener_thread.start()
 
 def check_usb_status():
