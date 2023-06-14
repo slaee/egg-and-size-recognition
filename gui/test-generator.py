@@ -25,13 +25,14 @@ imageSizeTextBox.configure(font=("XL", 16))
 imageSizeTextBox.place(x=420, y=520, relwidth=0.2, relheight=0.08)
 
 captureimage = None
+w_pixels = None
 
 def capture_image():
     image_name = imageTextBox.get()
     image_size = imageSizeTextBox.get()
     if image_name != "":
-        captureimage.save("./datasets/eggs/" + image_name + "-" + image_size + ".png")
-        print("Image saved")
+        captureimage.save(f"./datasets/tests/{image_name}-{image_size}-{w_pixels}.png")
+        print(f"{image_name}-{image_size}-{w_pixels}.png - SAVED")
     else:
         print("Image not saved")
 
@@ -52,6 +53,12 @@ if cap.isOpened():
         image = image.crop((left, top, right, bottom))
 
         captureimage = image
+
+        threshold = np.mean(image)
+        above_threshold = image > threshold
+        white_pixels = np.sum(above_threshold)
+
+        w_pixels = white_pixels
 
         # if(np.mean(image) > 10):
         #     print("Egg detected")
