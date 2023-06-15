@@ -31,7 +31,7 @@ def capture_image():
     image_name = imageTextBox.get()
     image_size = imageSizeTextBox.get()
     if image_name != "":
-        captureimage.save(f"./datasets/tests/{image_name}-{image_size}-{w_pixels}.png")
+        captureimage.save(f"./datasets/eggs/{image_name}-{image_size}-{w_pixels}.png")
         print(f"{image_name}-{image_size}-{w_pixels}.png - SAVED")
     else:
         print("Image not saved")
